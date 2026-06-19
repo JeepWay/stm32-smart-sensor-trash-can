@@ -1,0 +1,8 @@
+# list top 20 used
+arm-none-eabi-nm --print-size --size-sort build/Debug/stm32-smart-sensor-trash-can-f103c8t6.elf | tail -n 20
+
+# list each section size
+arm-none-eabi-size -A -d .\build\Debug\stm32-smart-sensor-trash-can-f103c8t6.elf
+
+# .elf to .bin
+arm-none-eabi-objcopy -O binary .\build\Debug\stm32-smart-sensor-trash-can-f103c8t6.elf output.bin
