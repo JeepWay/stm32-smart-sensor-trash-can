@@ -1,0 +1,33 @@
+name: Auto Render Graphviz
+
+on:
+  push:
+    paths:
+      - '**.dot' # 只有當專案中的 .dot 檔案被修改時，才會觸發這個自動化流程
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. 複製專案程式碼到虛擬主機
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2. 使用你找到的這個 Action 安裝 Graphviz 環境
+      - name: Setup Graphviz
+        uses: ts-graphviz/setup-graphviz@v2
+
+      # 3. 執行編譯指令（請根據你的實際檔名與路徑修改）
+      - name: Render Dot to SVG
+        run: |
+          mkdir -p Images
+          dot -Tsvg ./Docs/Dot/main-loop-logic-flow.zh-tw.dot -o ./Docs/Images/main-loop-logic-flow.zh-tw.svg
+
+      # 4. 如果圖片有變更，自動 commit 並 push 回你的 GitHub 儲存庫
+      - name: Commit and Push Changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add ./Docs/Images/main-loop-logic-flow.zh-tw.svg
+          # 檢查是否有檔案變更，有變更才 commit，避免流程報錯
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: auto-render graphviz to svg [skip ci]" && git push)
