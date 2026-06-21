@@ -18,16 +18,19 @@ jobs:
         uses: ts-graphviz/setup-graphviz@v2
 
       # 3. 執行編譯指令（請根據你的實際檔名與路徑修改）
-      - name: Render Dot to SVG
+      - name: Render Dot to High-Res PNG
         run: |
-          mkdir -p Images
-          dot -Tsvg ./Docs/Dot/main-loop-logic-flow.zh-tw.dot -o ./Docs/Images/main-loop-logic-flow.zh-tw.svg
+          # 確保 ./Docs/Images/ 資料夾存在
+          mkdir -p ./Docs/Images
+          # 編譯成 300 DPI 的高畫質 PNG
+          dot -Gdpi=300 -Tpng ./Docs/Dot/main-loop-logic-flow.zh-tw.dot -o ./Docs/Images/main-loop-logic-flow.zh-tw.png
 
       # 4. 如果圖片有變更，自動 commit 並 push 回你的 GitHub 儲存庫
       - name: Commit and Push Changes
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add ./Docs/Images/main-loop-logic-flow.zh-tw.svg
+          # 追蹤產出的 PNG 檔案
+          git add ./Docs/Images/main-loop-logic-flow.zh-tw.png
           # 檢查是否有檔案變更，有變更才 commit，避免流程報錯
           git diff --quiet && git diff --staged --quiet || (git commit -m "chore: auto-render graphviz to svg [skip ci]" && git push)
