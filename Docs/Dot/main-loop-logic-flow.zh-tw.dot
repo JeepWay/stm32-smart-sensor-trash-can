@@ -11,7 +11,7 @@ digraph G {
     ranksep=0.4
     label = "Infinite Loop (while(1))";
     labelloc="t";
-    fontsize=16;
+    fontsize=18;
     
     // Stage 3: 主迴圈與狀態機
     subgraph cluster_while_stage {
