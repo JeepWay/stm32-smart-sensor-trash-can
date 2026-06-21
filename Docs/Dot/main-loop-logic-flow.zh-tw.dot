@@ -1,10 +1,10 @@
 digraph G {
     bgcolor="#f8f9fa"
     style="filled"
-    fontname="Microsoft JhengHei, Arial"
+    fontname="Microsoft JhengHei, Arial, wqy-microhei, sans-serif"
     
-    node [fontname="Microsoft JhengHei, Arial", fontsize=11, style="filled,rounded", color="#4a5568", fillcolor="#ffffff", penwidth=1.5]
-    edge [fontname="Microsoft JhengHei, Arial", fontsize=10, color="#718096", penwidth=1.2]
+    node [fontname="Microsoft JhengHei, Arial, wqy-microhei, sans-serif", fontsize=11, style="filled,rounded", color="#4a5568", fillcolor="#ffffff", penwidth=1.5]
+    edge [fontname="Microsoft JhengHei, Arial, wqy-microhei, sans-serif", fontsize=10, color="#718096", penwidth=1.2]
     
     rankdir=TB;
     nodesep=0.4;
