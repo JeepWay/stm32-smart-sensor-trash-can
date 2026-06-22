@@ -91,16 +91,17 @@ int main(void)
 
   // ===== Contextual adaptive variable =====
   static uint16_t current_hold_time = LID_HOLD_TIME; 
-  static uint16_t saved_hold_time = LID_HOLD_TIME;   // save in eeprom
+  static uint16_t saved_hold_time;   // save in eeprom
   static uint16_t normal_use_count = 0;
   static uint32_t last_close_tick = 0;              
   static bool need_cool_down_check = false;          // turn TRUE after lid fully closed
   #define EEPROM_HOLD_TIME_ADDR   0x0000
   #define COOL_DOWN_TIMEOUT       15000   // timeout for check nobody is using
-  #define TIME_INCREMENT          1000    // for current_hold_time
+  #define TIME_INCREMENT          1000    // for increase current_hold_time
+  #define TIME_DECREMENT          200     // for decrease current_hold_time
   #define MAX_HOLD_TIME           20000
   #define MIN_HOLD_TIME           1000
-  #define DECREASE_THRESHOLD      3
+  #define DECREASE_THRESHOLD      10      // for normal use
   // ========================================
   /* USER CODE END 1 */
 
@@ -203,7 +204,7 @@ int main(void)
               normal_use_count++;
               if (normal_use_count >= DECREASE_THRESHOLD && current_hold_time > LID_HOLD_TIME)
               {
-                current_hold_time -= 100;
+                current_hold_time -= TIME_DECREMENT;
 
                 if (current_hold_time < LID_HOLD_TIME)
                   current_hold_time = LID_HOLD_TIME;
@@ -278,7 +279,7 @@ int main(void)
             {
               lid_state = LID_CLOSED;
               last_close_tick = HAL_GetTick();
-              need_cool_down_check = true;     // 蓋子關了，開啟冷卻倒數計時
+              need_cool_down_check = true;     // start cool down after lid closed
               LOG_INFO("Lid fully closed. Ready for next trigger.\n");
             }
           }

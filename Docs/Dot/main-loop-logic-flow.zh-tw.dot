@@ -34,7 +34,7 @@ digraph G {
         INT_USE_COUNT [label="normal_use_count++"]
         CHK_USE_COUNT [label="是否多次正常使用？\n(DECREASE_THRESHOLD)", shape=diamond, width=1.0, height=1.2, fillcolor="#e2e8f0"]
         CLR_USE_COUNT [label="normal_use_count=0"]
-        DEC_HOLD_TIME [label="減少開蓋持續時間\ncurrent_hold_time -= 100", fillcolor="#fffaf0"]
+        DEC_HOLD_TIME [label="減少開蓋持續時間\ncurrent_hold_time -= TIME_DECREMENT", fillcolor="#fffaf0"]
         WRITE_EEPROM  [label="把使用者習慣 saved_hold_time\n寫入eeprom", fillcolor="#fffaf0"]
         
         CHK_DIST [label="偵測距離介於\n20cm < dist < 100cm？", shape=diamond, width=1.0, height=1.2, fillcolor="#e2e8f0"]
